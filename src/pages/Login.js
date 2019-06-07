@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 import styles from "../styles/style";
-import { Text, View, TextInput, ScrollView, StatusBar, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, StatusBar, StyleSheet } from 'react-native';
 import { Button, Image } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
+import { Container, Content } from 'native-base';
 import TextInputMask from 'react-native-text-input-mask';
 import api from '../services/api';
 

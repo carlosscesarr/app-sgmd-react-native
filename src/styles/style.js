@@ -59,4 +59,5 @@ export default {
         height: 45,
         marginTop: 15,
     },
+
 };

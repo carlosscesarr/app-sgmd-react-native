@@ -1,8 +1,7 @@
 import React, { Component} from 'react';
-import { StatusBar, View, Text, TextInput, ScrollView, StyleSheet } from 'react-native';
-import { Container, Content, Body, Header, Left, Right } from 'native-base';
+import { StatusBar, View, Text, ScrollView, StyleSheet } from 'react-native';
+import { Container, Content, Header, Left, Right } from 'native-base';
 import { Button, Icon } from 'react-native-elements';
-//import Icon from 'react-native-vector-icons/FontAwesome';
 import TextInputMask from 'react-native-text-input-mask';  
 
 export default class Register extends Component {

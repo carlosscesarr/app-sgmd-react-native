@@ -1,32 +1,30 @@
 import React, { Component } from "react";
-
 import styles from "../styles/style";
-import { Text, View, ScrollView, StatusBar, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, StatusBar, StyleSheet, Alert } from 'react-native';
 import { Button, Image } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, Content } from 'native-base';
 import TextInputMask from 'react-native-text-input-mask';
+import moment from 'moment'
 import api from '../services/api';
 
 export default class Login extends Component {
 
     state = {
-        textCpf: '', textBirthDate: '', disableLogin: true,
-        cpfLogin: '11111111111', birthDateLogin: '11111111', 
+        textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,
+        cpfLogin: '05622978394', birthDateLogin: '04/08/1995',  
     }
 
     userInfo = { id: 1, name: 'Carlos César', idade: 23, profissao: 'Programador' }
 
     captureCpf = (textWithMask, textWithoutMask ) => {
         this.setState({ textCpf: textWithoutMask }, this.checkForm)
-        console.log(this.state.textCpf);
     }
     captureBirthDate = (textWithMask, textWithoutMask )=> {
-        this.setState({ textBirthDate: textWithoutMask }, this.checkForm)
-        console.log(this.state.textBirthDate);
+        this.setState({ textBirthDate: textWithMask }, this.checkForm)
     }
     componentDidMount = async () => {
-        this.checkForm();
+        await this.checkForm(); 
     }
 
     requestLogin = async () => {
@@ -42,22 +40,23 @@ export default class Login extends Component {
     }
 
     onLoginPress = () => {
-        if (this.state.textBirthDate === this.state.birthDateLogin) {
-            if (this.state.textCpf === this.state.cpfLogin) {
-                console.log(this.state);
+        if (this.state.textBirthDate === this.state.birthDateLogin && 
+            this.state.textCpf === this.state.cpfLogin
+            ) {
                 AsyncStorage.setItem('@userLogged', JSON.stringify(this.userInfo));
                 this.props.navigation.navigate('Courses');
-            } else {
-                alert('cpf errado');
-            }
         } else {
-            alert('senha errado');
+            Alert.alert('Login','Usuário não encontrado');  
         }
     }
 
-    checkForm = () => {
-        if (this.state.textBirthDate != '' && this.state.textCpf != '') {
-            this.setState({ disableLogin: false })
+    checkForm = () => { 
+        if (this.state.textBirthDate.length == 10 && this.state.textCpf.length == 11) {
+            let countErrors = 0;
+            if (!moment(this.state.textBirthDate, 'DD/MM/YYYY').isValid()) {
+                countErrors++;
+            }
+            this.setState({disableLogin: (countErrors > 0) ? true : false});           
         }
     }
 
@@ -98,7 +97,7 @@ export default class Login extends Component {
                                         disabled={this.state.disableLogin}
                                         buttonStyle={styles.loginButton}
                                         onPress={this.onLoginPress}
-                                        title="Entrar" />
+                                        title="Entrar"/>
                                     <Button
                                         buttonStyle={styles.registerButton}
                                         onPress={() => this.props.navigation.navigate('Register')}

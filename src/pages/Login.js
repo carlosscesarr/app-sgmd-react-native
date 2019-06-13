@@ -11,8 +11,7 @@ import api from '../services/api';
 export default class Login extends Component {
 
     state = {
-        textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,
-        cpfLogin: '05622978394', birthDateLogin: '04/08/1995',  
+        textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,  
     }
 
     userInfo = { id: 1, name: 'Carlos César', idade: 23, profissao: 'Programador' }
@@ -25,28 +24,19 @@ export default class Login extends Component {
     }
     componentDidMount = async () => {
         await this.checkForm(); 
+        
     }
 
-    requestLogin = async () => {
+    onLoginPress = async () => {
         try {
-            const responseData = await api.post(baseUrl, {
+            const {data} = await api.post('/users/login', {
                 cpf: this.state.textCpf,
                 birthDate: this.state.textBirthDate
             });
-            console.log(responseData);
+            console.log(data);
+            
         } catch (error) {
-            console.log('Erro na api');
-        }
-    }
-
-    onLoginPress = () => {
-        if (this.state.textBirthDate === this.state.birthDateLogin && 
-            this.state.textCpf === this.state.cpfLogin
-            ) {
-                AsyncStorage.setItem('@userLogged', JSON.stringify(this.userInfo));
-                this.props.navigation.navigate('Courses');
-        } else {
-            Alert.alert('Login','Usuário não encontrado');  
+            
         }
     }
 

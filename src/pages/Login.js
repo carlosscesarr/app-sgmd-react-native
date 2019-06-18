@@ -11,7 +11,8 @@ import api from '../services/api';
 export default class Login extends Component {
 
     state = {
-        textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,  
+        textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,
+        userLogged: [],  
     }
 
     userInfo = { id: 1, name: 'Carlos César', idade: 23, profissao: 'Programador' }
@@ -27,19 +28,30 @@ export default class Login extends Component {
         
     }
 
+    storeUserLogged = async () => {
+        try {
+            await AsyncStorage.setItem('@userLogged', JSON.stringify(this.state.userLogged));
+        } catch (error) {
+            console.log('Caiu no catch '+error);
+        }
+    }
+
     onLoginPress = async () => {
-        /**let params = new URLSearchParams();
-        params.append('email', this.email );
-        params.append('url', userInfo.url ); */
+ 
         try {
             const {data} = await api.post('/users/login', {
                 cpf: this.state.textCpf,
                 birthDate: this.state.textBirthDate
             });
             console.log(data);
-            
+            if (data.success) { 
+                this.setState({...data.data.user[0]}, this.storeUserLogged);
+                this.props.navigation.navigate('Courses');
+            } else { 
+                alert(data.errors[0]);
+            }            
         } catch (error) {
-            
+             console.log('Erro na requisição' +error);
         }
     }
 

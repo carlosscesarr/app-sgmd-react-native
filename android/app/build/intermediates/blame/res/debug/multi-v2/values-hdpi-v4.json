@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/carloscesar/Desktop/react-native/app-sgmd-react-native/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
+            "outputFile": "C:\\react-native\\em-desenvolvimento\\app-sgmd-react-native\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-hdpi-v4\\values-hdpi-v4.xml",
             "map": [
                 {
-                    "source": "/Users/carloscesar/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/5d057144386457ade3e175750d6c6da1/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "source": "C:\\Users\\César\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\e1bf51d1cb967ab3a456d4b86108c5e4\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

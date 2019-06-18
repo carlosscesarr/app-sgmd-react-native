@@ -28,6 +28,9 @@ export default class Login extends Component {
     }
 
     onLoginPress = async () => {
+        /**let params = new URLSearchParams();
+        params.append('email', this.email );
+        params.append('url', userInfo.url ); */
         try {
             const {data} = await api.post('/users/login', {
                 cpf: this.state.textCpf,

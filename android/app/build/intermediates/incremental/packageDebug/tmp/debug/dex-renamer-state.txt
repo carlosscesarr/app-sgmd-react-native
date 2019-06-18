@@ -1,4 +1,4 @@
-#Sat Jun 08 14:05:45 BRT 2019
-base.0=C\:\\react-native\\em-desenvolvimento\\app-sgmd-react-native\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+#Mon Jun 17 19:52:02 BRT 2019
+base.0=/Users/carloscesar/Desktop/react-native/app-sgmd-react-native/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

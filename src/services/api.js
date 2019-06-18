@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default api = axios.create(
     {
-        baseURL: 'http://192.168.15.4/projetos/api-sgmd',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded',}
+        baseURL: 'http://192.168.25.22/api-sgmd',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     },
 );

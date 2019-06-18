@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
 import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '../services/api';
 
 export default class Courses extends Component {
     static navigationOptions = {
@@ -18,17 +19,17 @@ export default class Courses extends Component {
     };
 
     state = {
-        courses: [
-            {id: 1, nome: 'Tec. Informática'}, {id: 2, nome: 'Tec. Agropecuária'},
-            {id: 3, nome: 'Tec. Enfermagem'}, {id: 4, nome: 'Tec. Informática Picos'},
-            {id: 5, nome: 'Pronatec Tec. Nutrição Picos'},
-        ],
+        courses: [],
     }
 
     loggerUser = async () => {
-        const userInfo = await AsyncStorage.getItem('@userLogged');
-        const user = JSON.parse(userInfo);
-        console.log(user);
+        try {
+            const userInfo = await AsyncStorage.getItem('@userLogged');
+            const user = JSON.parse(userInfo);
+            //console.log(user);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     renderCourses = ({item}) => (
@@ -39,8 +40,23 @@ export default class Courses extends Component {
         </TouchableOpacity>
     )
 
+    getAllCourses = async () => {
+        try {
+            const response = await api.get('/courses/getAll');
+            console.log(response);
+            if (response.data.success) {
+                const courses = response.data.data.courses;
+                this.setState({courses});
+            }
+        } catch (error) {
+            console.log('Erro na requisição de busca aos cursos' + error);
+        }
+        
+    }
+
     componentDidMount = async () => {
         this.loggerUser();
+        this.getAllCourses();
     }
 
     render() {

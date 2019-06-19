@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
 import { Container, Content} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '../services/api';
 
 export default class Modules extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -29,14 +30,33 @@ export default class Modules extends Component {
     };
 
     state = {
-        modules: [
-            {id: 1, nome: 'Módulo I', curso_id: 1}, {id: 2, nome: 'Módulo II', curso_id: 2},
-            {id: 3, nome: 'Módulo III', curso_id: 3}, {id: 4, nome: 'Módulo IV', curso_id: 4},
-        ],
+        modules: [],
+        courseId: this.props.navigation.getParam('courseId'),
+        userLogged: null
     }
+
     loggerUser = async () => {
         const userInfo = await AsyncStorage.getItem('@userLogged');
-        const user = JSON.parse(userInfo);
+        if (userInfo) {
+            const userLogged = JSON.parse(userInfo);
+            this.setState({userLogged});
+        }
+    }
+
+    getAllModules = async () => {
+        const courseId = this.state.courseId;
+        
+        try {
+            const response = await api.get(`/modules/course/${courseId}`);
+            if (response.success) {
+                const modules = response.data.data.modules;
+                console.log(modules);
+                //this.setState({courses});
+            }
+        } catch (error) {
+            console.log('Erro na requisição de busca aos cursos' + error);
+        }
+        
     }
 
     renderModules = ({item}) => ( 
@@ -49,6 +69,7 @@ export default class Modules extends Component {
 
     componentDidMount = async () => {
         this.loggerUser();
+        this.getAllModules();
     }
 
     render() {

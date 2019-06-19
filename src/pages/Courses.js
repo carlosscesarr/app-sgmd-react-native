@@ -20,13 +20,14 @@ export default class Courses extends Component {
 
     state = {
         courses: [],
+        userLogged: null
     }
 
     loggerUser = async () => {
         try {
             const userInfo = await AsyncStorage.getItem('@userLogged');
             const user = JSON.parse(userInfo);
-            //console.log(user);
+            this.setState({userLogged: {...user}});
         } catch (error) {
             console.log(error);
         }
@@ -43,7 +44,6 @@ export default class Courses extends Component {
     getAllCourses = async () => {
         try {
             const response = await api.get('/courses/getAll');
-            console.log(response);
             if (response.data.success) {
                 const courses = response.data.data.courses;
                 this.setState({courses});

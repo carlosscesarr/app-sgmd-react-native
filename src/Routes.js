@@ -65,7 +65,7 @@ const MainRoutes = {
 
 const MainNavigator = createStackNavigator(MainRoutes,
     { 
-        initialRouteName: 'Login'    
+        initialRouteName: 'Courses'    
     }
 );
 

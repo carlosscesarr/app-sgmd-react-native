@@ -12,7 +12,7 @@ export default class Login extends Component {
 
     state = {
         textCpf: '05622978394', textBirthDate: '04/08/1995', disableLogin: true,
-        userLogged: [],  
+        userLogged: null,  
     }
 
     userInfo = { id: 1, name: 'Carlos César', idade: 23, profissao: 'Programador' }
@@ -45,7 +45,8 @@ export default class Login extends Component {
             });
             console.log(data);
             if (data.success) { 
-                this.setState({...data.data.user[0]}, this.storeUserLogged);
+                console.log(data.data.user[0]);
+                this.setState({userLogged: {...data.data.user[0]}}, this.storeUserLogged);
                 this.props.navigation.navigate('Courses');
             } else { 
                 alert(data.errors[0]);

@@ -45,13 +45,15 @@ export default class Modules extends Component {
 
     getAllModules = async () => {
         const courseId = this.state.courseId;
-        
+         
         try {
             const response = await api.get(`/modules/course/${courseId}`);
-            if (response.success) {
+            console.log(response);
+            if (response.data.success) {
                 const modules = response.data.data.modules;
+                console.log('Módulos');
                 console.log(modules);
-                //this.setState({courses});
+                this.setState({modules});
             }
         } catch (error) {
             console.log('Erro na requisição de busca aos cursos' + error);

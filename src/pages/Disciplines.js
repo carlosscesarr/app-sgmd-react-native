@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 import { Container, Content } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Disciplines extends Component {
     static navigationOptions = ({ navigations }) => {
@@ -22,10 +23,40 @@ export default class Disciplines extends Component {
         };
     }
     state = {
-        disciplines: [
-            {id: 1, nome: 'Lógica de Programação', modulo_id: 1}, {id: 2, nome: 'Análise de Sistemas', modulo_id: 2},
-            {id: 3, nome: 'Rede de Computadores', modulo_id: 3}, {id: 4, nome: 'Empreendedorismo', modulo_id: 4},
-        ],
+        userLogged: [],
+        moduleId: this.props.navigation.getParam('moduleId'),
+        disciplines: [],
+    }
+    loggerUser = async () => {
+        try {
+            const userloggedStorage = await AsyncStorage.getItem('@userLogged');
+            const userLogged = JSON.parse(userloggedStorage);
+            this.setState({userLogged});
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    getDisciplinesByModule = async () => {
+        const moduleId = this.state.moduleId;
+        try {
+            const response = await api.get(`/disciplines/module/${moduleId}`);
+            if (response.data.success) {
+                const disciplines = response.data.data.disciplines;
+                if (disciplines) {
+                    this.setState({disciplines});
+                }
+            } else {
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount = async () => {
+        this.loggerUser();
+        this.getDisciplinesByModule();
     }
 
     renderDisciplines = ({item}) => (

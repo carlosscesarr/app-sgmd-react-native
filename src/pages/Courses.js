@@ -47,7 +47,8 @@ export default class Courses extends Component {
             if (response.data.success) {
                 const courses = response.data.data.courses;
                 this.setState({courses});
-            }
+                console.log(this.state); 
+            } 
         } catch (error) {
             console.log('Erro na requisição de busca aos cursos' + error);
         }

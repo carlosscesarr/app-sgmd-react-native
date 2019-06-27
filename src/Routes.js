@@ -54,12 +54,17 @@ const MainRoutes = {
     Modules: {
         name: 'Modules',
         screen: Modules,
-        title: 'Módulos'
+        title: 'Módulos',
     },
     Disciplines: {
         name: 'Disciplines',
         screen: Disciplines,
-        title: 'Disciplinas'
+        title: 'Disciplinas',
+    },
+    Resources: {
+        name: 'Resources',
+        screen: Resources,
+        title: 'Recursos',
     }
 }
 

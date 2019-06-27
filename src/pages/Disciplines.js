@@ -18,8 +18,8 @@ export default class Disciplines extends Component {
                     <Text style={{ color: '#fff', fontSize: 10 }}>Módulo IV</Text>
                 </View>
             ),
-        headerRight: <Icon name='home' size={23} style={{color: '#fff', marginRight: 15}}/>,
-            headerTintColor: '#fff'
+            headerRight: <Icon name='home' size={23} style={{color: '#fff', marginRight: 15}}/>,
+            headerTintColor: '#fff',
         };
     }
     state = {
@@ -27,6 +27,7 @@ export default class Disciplines extends Component {
         moduleId: this.props.navigation.getParam('moduleId'),
         disciplines: [],
     }
+    
     loggerUser = async () => {
         try {
             const userloggedStorage = await AsyncStorage.getItem('@userLogged');
@@ -60,7 +61,8 @@ export default class Disciplines extends Component {
     }
 
     renderDisciplines = ({item}) => (
-        <TouchableOpacity style={styles.disciplinesContainer}>
+        <TouchableOpacity style={styles.disciplinesContainer} 
+            onPress={() => this.props.navigation.navigate('Resources', {disciplineId: item.id})}>
             <Text>{item.nome}</Text>
             <Icon name='chevron-right' size={23}/>
         </TouchableOpacity>

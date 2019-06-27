@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView } from 'react-native'; 
-import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
+import { Container, Content } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../services/api';
 
@@ -35,6 +35,13 @@ export default class Resources extends Component {
         </TouchableOpacity>
     )
 
+    loggerUser = async () => {
+        const userInfo = await AsyncStorage.getItem('@userLogged');
+        if (userInfo) {
+            const userLogged = JSON.parse(userInfo);
+            this.setState({userLogged});
+        }
+    }
     getAllResourcesByDiscipline = async () => {
         let disciplineId = this.state.disciplineId;
         try {
@@ -57,6 +64,7 @@ export default class Resources extends Component {
         }
     }
     componentDidMount = async () => {
+        this.loggerUser();
         this.getAllResourcesByDiscipline();
     }
 

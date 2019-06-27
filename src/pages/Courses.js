@@ -20,7 +20,7 @@ export default class Courses extends Component {
 
     state = {
         courses: [],
-        userLogged: null
+        userLogged: [],
     }
 
     loggerUser = async () => {

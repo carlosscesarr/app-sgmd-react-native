@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Content} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -81,12 +81,13 @@ export default class Modules extends Component {
                     <View>
                         <StatusBar backgroundColor="#006400" barStyle="light-content" />
                     </View>
-                    <View style={styles.containerList}>
+                    <ScrollView style={styles.containerList}>
                         <FlatList 
                             data={this.state.modules}
                             keyExtractor={(item, index) => `${item.id}`}
-                            renderItem={this.renderModules}/>
-                    </View>
+                            renderItem={this.renderModules}
+                            />
+                    </ScrollView>
                 </Content>
             </Container>
         );
@@ -114,6 +115,8 @@ const styles = StyleSheet.create({
         padding: 20
     },
     textList: {
-        fontFamily: 'Karla'
+        fontFamily: 'karla',
+        fontSize: 15,
+        flex: 1,  
     }
 });

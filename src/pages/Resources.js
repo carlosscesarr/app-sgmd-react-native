@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList } from 'react-native'; 
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView } from 'react-native'; 
 import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../services/api';
@@ -30,7 +30,7 @@ export default class Resources extends Component {
 
     renderResources = ({item}) => (
         <TouchableOpacity style={styles.resourcesContainer} >
-            <Text>{item.nome}</Text>
+            <Text style={styles.textList}>{item.nome}</Text>
             <Icon name='chevron-right' size={23}/>
         </TouchableOpacity>
     )
@@ -40,10 +40,13 @@ export default class Resources extends Component {
         try {
             const response = await api.get(`/resources/discipline/${disciplineId}`);
             if (response.data.success) {
-                const resources = response.data.data.resources;
-                if (resources) {
+                if (response.data.rows > 0 ) {
+                    const resources = response.data.data.resources;
                     console.log(resources);
                     this.setState({resources});
+                } else {
+                    alert('Esta disciplina não possui recursos disponíveis');
+                    this.props.navigation.goBack();
                 }
             } else {
                 alert('Erro ao buscar os recursos dessa disciplina');
@@ -64,10 +67,10 @@ export default class Resources extends Component {
                     <View>
                         <StatusBar backgroundColor="#006400" barStyle="light-content" />
                     </View>
-                    <View style={styles.containerList}>
+                    <ScrollView style={styles.containerList}>
                         <FlatList data={this.state.resources} keyExtractor={(item, index) =>  `${item.id}`}
                         renderItem={this.renderResources}/>
-                    </View>
+                    </ScrollView>
                 </Content>
             </Container>
         ); 
@@ -93,5 +96,10 @@ const styles = StyleSheet.create({
     },
     containerList: {
         padding: 20,
+    },
+    textList: {
+        fontFamily: 'karla',
+        fontSize: 15,
+        flex: 1,  
     }
 });

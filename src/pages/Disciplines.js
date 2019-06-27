@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { Container, Content } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -43,14 +43,21 @@ export default class Disciplines extends Component {
         try {
             const response = await api.get(`/disciplines/module/${moduleId}`);
             if (response.data.success) {
-                const disciplines = response.data.data.disciplines;
-                if (disciplines) {
+                if (response.data.rows > 0) {
+                    const disciplines = response.data.data.disciplines;
                     this.setState({disciplines});
+                } else {
+                    alert('Nenhuma disciplina foi encontrada para este módulo');
+                    this.props.navigation.goBack();
                 }
             } else {
+                alert('Erro ao buscar as disciplinas para este módulo');
+                this.props.navigation.goBack();
                 console.log(response);
             }
         } catch (error) {
+            alert('Erro na requisição de disciplinas');
+            this.props.navigation.goBack();
             console.log(error);
         }
     }
@@ -63,7 +70,7 @@ export default class Disciplines extends Component {
     renderDisciplines = ({item}) => (
         <TouchableOpacity style={styles.disciplinesContainer} 
             onPress={() => this.props.navigation.navigate('Resources', {disciplineId: item.id})}>
-            <Text>{item.nome}</Text>
+            <Text style={styles.textList}>{item.nome}</Text>
             <Icon name='chevron-right' size={23}/>
         </TouchableOpacity>
     )
@@ -75,13 +82,13 @@ export default class Disciplines extends Component {
                     <View>
                         <StatusBar backgroundColor="#006400" barStyle="light-content" />
                     </View>
-                    <View style={styles.containerList}>
+                    <ScrollView style={styles.containerList}>
                         <FlatList 
                             data={this.state.disciplines}
                             keyExtractor={(item, index) => `${item.id}`}
                             renderItem={this.renderDisciplines}
                         />
-                    </View>
+                    </ScrollView>
                 </Content>
             </Container>
         );
@@ -107,5 +114,10 @@ const styles = StyleSheet.create({
     },
     containerList: {
         padding: 20
+    },
+    textList: {
+        fontFamily: 'karla',
+        fontSize: 15,
+        flex: 1,  
     }
 });

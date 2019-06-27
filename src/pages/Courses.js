@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -77,13 +77,14 @@ export default class Courses extends Component {
                     <View>
                         <StatusBar backgroundColor="#006400" barStyle="light-content" />
                     </View>
-                    <View style={styles.containerFlat}>
+                    <ScrollView style={styles.containerFlat}>
                         <FlatList 
                             contentContainerStyle={styles.listCourses}
                             data={this.state.courses}
                             keyExtractor={item => `${item.id}`}
-                            renderItem={this.renderCourses}/>
-                    </View>
+                            renderItem={this.renderCourses}
+                            />
+                    </ScrollView>
 
                 </Content>
             </Container>
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     },
     textList: {
         fontFamily: 'karla',
-        fontSize: 15  
+        fontSize: 15,
+        flex: 1,  
     }
 });

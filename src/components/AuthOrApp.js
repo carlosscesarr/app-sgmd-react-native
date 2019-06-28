@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class AuthOrApp extends Component {
 
-    componentDidMount = async () => {
+    componentWillMount = async () => {
         const json = await AsyncStorage.getItem('@userLogged');
         const userInfo = JSON.parse(json) || null;
         if (userInfo != null) {
@@ -15,13 +15,14 @@ export default class AuthOrApp extends Component {
     }
     render() { 
         return (
-            <View />
+            <View style={styles.container}>
+                <ActivityIndicator size='large' />
+            </View>
         )    
     }
-    
 }
 
-/*const styles = StyleSheet.create(
+const styles = StyleSheet.create(
     {
         container: {
             flex: 1,
@@ -30,4 +31,4 @@ export default class AuthOrApp extends Component {
             backgroundColor: 'black',
         }
     }
-)*/
+)

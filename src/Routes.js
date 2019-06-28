@@ -13,7 +13,7 @@ const MenuRoutes = {
         name: 'Courses',
         screen: Courses,
         title: 'Cursos',
-    }
+    },
 }
 
 const MenuConfig = {
@@ -68,7 +68,7 @@ const MainRoutes = {
     }
 }
 
-const MainNavigator = createStackNavigator(MainRoutes,
+const MainNavigator = createSwitchNavigator(MainRoutes,
     { 
         initialRouteName: 'Loading'    
     }

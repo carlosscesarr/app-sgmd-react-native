@@ -15,8 +15,6 @@ export default class Login extends Component {
         userLogged: null,  
     }
 
-    userInfo = { id: 1, name: 'Carlos César', idade: 23, profissao: 'Programador' }
-
     captureCpf = (textWithMask, textWithoutMask ) => {
         this.setState({ textCpf: textWithoutMask }, this.checkForm)
     }
@@ -43,10 +41,9 @@ export default class Login extends Component {
                 cpf: this.state.textCpf,
                 birthDate: this.state.textBirthDate
             });
-            console.log(data);
             if (data.success) { 
-                console.log(data.data.user[0]);
-                this.setState({userLogged: {...data.data.user[0]}}, this.storeUserLogged);
+                this.setState({userLogged: {...data.data.user}}, this.storeUserLogged);
+                console.log(this.state.userLogged);
                 this.props.navigation.navigate('Courses');
             } else { 
                 alert(data.errors[0]);
@@ -151,14 +148,3 @@ const stylesLogin = StyleSheet.create(
             marginBottom: 2,
         }
     })
-/* Template for header page
-<Header style={stylesLogin.header}>
-    <Left>
-        <Icon style={{ color: 'black' }} name="arrow-left"
-            onPress={() => this.props.navigation.openDrawer()} />
-    </Left>
-    <Body>
-        <Title>Cursos</Title>
-    </Body>
-    <Right />
-</Header>*/

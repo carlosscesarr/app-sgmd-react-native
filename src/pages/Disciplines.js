@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Disciplines extends Component {
-    static navigationOptions = ({ navigations }) => {
+    static navigationOptions = ({ navigation }) => {
         return {
             title: 'Disciplinas',
             headerStyle: {
@@ -18,12 +18,12 @@ export default class Disciplines extends Component {
                     <Text style={{ color: '#fff', fontSize: 10 }}>Módulo IV</Text>
                 </View>
             ),
-            headerRight: <Icon name='home' size={23} style={{color: '#fff', marginRight: 15}}/>,
+            headerRight: <Icon onPress={() => navigation.navigate('Courses')}name='home' size={23} style={{color: '#fff', marginRight: 15}}/>,
             headerTintColor: '#fff',
         };
     }
     state = {
-        userLogged: [],
+        userLogged: null,
         moduleId: this.props.navigation.getParam('moduleId'),
         disciplines: [],
     }

@@ -32,7 +32,7 @@ export default class Modules extends Component {
     state = {
         modules: [],
         courseId: this.props.navigation.getParam('courseId'),
-        userLogged: [],
+        userLogged: null,
     }
 
     loggerUser = async () => {

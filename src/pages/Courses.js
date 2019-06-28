@@ -20,14 +20,15 @@ export default class Courses extends Component {
 
     state = {
         courses: [],
-        userLogged: [],
+        userLogged: null,
     }
 
     loggerUser = async () => {
         try {
             const userInfo = await AsyncStorage.getItem('@userLogged');
-            const user = JSON.parse(userInfo);
-            this.setState({userLogged: {...user}});
+            const userLogged = JSON.parse(userInfo);
+            this.setState({userLogged});
+            console.log(this.state.userLogged);
         } catch (error) {
             console.log(error);
         }

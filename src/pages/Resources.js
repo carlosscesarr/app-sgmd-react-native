@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView } from 'react-native'; 
 import { Container, Content } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
 export default class Resources extends Component {
-    static navigationOptions = ({ navigations }) => {
+    static navigationOptions = ({ navigation }) => {
         return {
             title: 'Recursos',
             headerStyle: {
@@ -18,14 +19,15 @@ export default class Resources extends Component {
                     <Text style={{ color: '#fff', fontSize: 10 }}>Módulo IV</Text>
                 </View>
             ),
-            headerRight: <Icon name='home' size={23} style={{color: '#fff', marginRight: 15}}/>,
+            headerRight: <Icon name='home' onPress={() => navigation.navigate('Courses')} size={23} style={{color: '#fff', marginRight: 15}}/>,
             headerTintColor: '#fff',
         };
     }
 
     state = {
         disciplineId: this.props.navigation.getParam('disciplineId'),
-        resources: []
+        resources: [],
+        userLogged: null,
     }
 
     renderResources = ({item}) => (

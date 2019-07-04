@@ -14,7 +14,7 @@ export default class Modules extends Component {
                   <Text style={{fontSize: 17, color: 'white',fontWeight: 'bold'}}>Módulos</Text> 
                   <Text style={{fontSize: 10, color: 'white', }}>Tec. Informática</Text>
                 </View>
-              ),
+            ),
             headerStyle: {
                 backgroundColor: '#00a54e',
             },

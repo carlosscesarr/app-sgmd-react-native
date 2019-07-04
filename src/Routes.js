@@ -5,6 +5,7 @@ import Resources from './pages/Resources';
 import Login from './pages/Login';
 import AuthOrApp from './components/AuthOrApp';
 import Register from './pages/Register';
+import DownloadHistory from './pages/DownloadHistory';
 
 import { createStackNavigator, createAppContainer, createDrawerNavigator, createSwitchNavigator  } from 'react-navigation';
  
@@ -14,6 +15,11 @@ const MenuRoutes = {
         screen: Courses,
         title: 'Cursos',
     },
+    DownloadHistory: {
+        name: 'DownloadHistory',
+        screen: DownloadHistory,
+        title: 'Histórico de downloads',
+    }
 }
 
 const MenuConfig = {
@@ -68,7 +74,7 @@ const MainRoutes = {
     }
 }
 
-const MainNavigator = createSwitchNavigator(MainRoutes,
+const MainNavigator = createStackNavigator(MainRoutes,
     { 
         initialRouteName: 'Loading'    
     }

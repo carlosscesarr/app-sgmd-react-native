@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-import { Container, Content} from 'native-base';
+import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../services/api';
@@ -9,6 +9,10 @@ import api from '../services/api';
 export default class Modules extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
+            title: 'Disciplinas',
+            headerStyle: {
+                backgroundColor: '#00a54e',
+            },
             headerTitle: (
                 <View>
                   <Text style={{fontSize: 17, color: 'white',fontWeight: 'bold'}}>Módulos</Text> 
@@ -18,10 +22,10 @@ export default class Modules extends Component {
             headerStyle: {
                 backgroundColor: '#00a54e',
             },
-            headerRight: (
+            headerRight: 
                 <Icon name='home' size={23} onPress={() => navigation.navigate('Courses') } 
                 style={{color: '#fff', marginRight: 15}}/>
-            ),
+            ,
             headerTintColor: '#fff',
             headerTitleStyle: {
                 fontWeight: 'bold',

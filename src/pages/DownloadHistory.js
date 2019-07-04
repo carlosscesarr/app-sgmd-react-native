@@ -1,36 +1,25 @@
 import React, { Component } from 'react';
-import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { Container, Body, Header, Content, Left, Title, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Container, Content } from 'native-base';
 import api from '../services/api';
-import { ScrollView } from 'react-native-gesture-handler';
-
 
 export default class DownloadHistory extends Component
 {
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: (
-                <View>
-                    <Text>Histórico de downloads</Text>
-                </View>
-            ),
-            headerStyle: {
-                backgroundColor: '#00a54e',
-            },
-            headerRight: (
-                <Icon name='home' size={23} onPress={() => {}} />
-            ),
-            headerTintColor: '#fff',
-            headerTitleStle: {
-                fontWeight: 'bold',
-            },
-        }
+    static navigationOptions = {
+        title: 'Histórico de downloads',
+        headerStyle: {
+            backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
     };
 
-    state = {
-        downloadHistory = [],
+    state = { 
+        downloadHistory: [], 
         userLogged: null,
         loading: false,
     }
@@ -43,21 +32,21 @@ export default class DownloadHistory extends Component
             console.log(response);
             if (response.data.success) {
                 const downloadHistory = response.data.data.downloads;
-                console.log('Histórico de downloas');
-                console.log(downloadHistory);
                 this.setState({downloadHistory});
+                console.log('state');
+                console.log(this.state.downloadHistory);
             }
         } catch (error) {
             console.log('Erro na requisição de busca de downloads' + error);
         }
     }
-    renderDownloadHistory = ({item}) => {
-        <TouchableOpacity onPress={() => {}}>
-            <Text>{item.nome_recurso}</Text>
-            <Text>{item.disciplina}</Text>
-            <Text>{item.str_data_down}</Text>
+    renderDownloadHistory = ({item}) => (
+        <TouchableOpacity style={styles.downloadsHistorysContainer} onPress={() => {}}>
+            <Text style={styles.textList}>{item.nome_recurso}</Text>
+            <Text style={styles.textList}>{item.disciplina}</Text>
+            <Text style={styles.textList}>{item.str_data_down}</Text>
         </TouchableOpacity>
-    }
+    )
 
     componentDidMount = async () => {
         this.getDownloads();
@@ -66,12 +55,23 @@ export default class DownloadHistory extends Component
     render() {
         return (
             <Container>
-                <Content>
+                <Header style={{ backgroundColor: '#00a54e', flexDirection: 'row', justifyContent: 'flex-start', padding: 0, }}>
+                    <Left>
+                        <Icon style={{ color: 'white' }} name="menu" size={23}
+                            onPress={() => this.props.navigation.openDrawer()} />
+                    </Left>
+                    <Body>
+                        <Title>Histórico de downloads</Title>
+                    </Body>
+                    <Right />
+                </Header>
+                <Content contentContainerStyle={{flex: 1 }}>
                     <View>
-                        <StatusBar backgroundColor='#006400' barStyle='light-content'/>
+                        <StatusBar backgroundColor="#006400" barStyle="light-content" />
                     </View>
-                    <ScrollView>
+                    <ScrollView style={styles.containerFlat}>
                         <FlatList 
+                            contentContainerStyle={styles.listDownloadHistory}
                             data={this.state.downloadHistory}
                             keyExtractor={(item, index) => `${item.id}`}
                             renderItem={this.renderDownloadHistory}
@@ -82,3 +82,34 @@ export default class DownloadHistory extends Component
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    containerFlat: {
+        flex: 1,
+        backgroundColor: "#fafafa",
+    },
+    listDownloadHistory: {
+        padding: 20,
+    },
+    downloadHistoryContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: "#FFF",
+        borderWidth: 1,
+        borderColor: "#DDD", 
+        borderRadius: 5,
+        padding: 15,
+        marginBottom: 10,
+    },
+    textList: {
+        fontFamily: 'karla',
+        fontSize: 15,
+        flex: 1,  
+    }
+});
